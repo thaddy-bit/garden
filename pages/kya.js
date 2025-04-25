@@ -5,7 +5,7 @@ import NewsletterForm from '../components/NewsletterForm';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Acceuil() {
+export default function Kya() {
   return (
     <Layout>
         
