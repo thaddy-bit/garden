@@ -1,10 +1,9 @@
-import Kya from './kya';
-
+import Kya from './Kya';
 
 export default function Home() {
   return (
     <>
-    <Kya/>
+      <Kya />
     </>
   )
 }
