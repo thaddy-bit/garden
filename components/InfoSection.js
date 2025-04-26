@@ -28,28 +28,28 @@ const HeroSlider = () => {
       id: 1,
       title: "Promotion d'été",
       description: "Découvrez nos offres spéciales",
-      image: "/images/i2.jpg",
+      image: "/images/g5.jpg",
       buttonText: "Voir les offres"
     },
     {
       id: 2,
       title: "Nouvelle collection",
       description: "Découvrez les dernières tendances",
-      image: "/images/i3.jpg",
+      image: "/images/g6.jpg",
       buttonText: "Découvrir"
     },
     {
       id: 3,
       title: "Livraison gratuite",
       description: "Sur toutes les commandes de plus de 50€",
-      image: "/images/i2.jpg",
+      image: "/images/g2.jpg",
       buttonText: "En savoir plus"
     },
     {
       id: 4,
       title: "Cadeaux exclusifs",
       description: "Pour vos commandes spéciales",
-      image: "/images/i3.jpg",
+      image: "/images/g4.jpg",
       buttonText: "Offrir maintenant"
     }
   ];
@@ -73,10 +73,10 @@ const HeroSlider = () => {
             
             {/* Contenu superposé */}
             <div className="relative z-10 flex flex-col items-start justify-center h-full px-8 sm:px-16 lg:px-24 text-white">
-              <h2 className="text-4xl sm:text-5xl text-black lg:text-6xl font-bold mb-4 animate-fadeIn">
+              <h2 className="text-4xl sm:text-5xl text-white lg:text-6xl font-bold mb-4 animate-fadeIn">
                 {slide.title}
               </h2>
-              <p className="text-xl sm:text-2xl text-black mb-9 max-w-lg animate-fadeIn delay-100">
+              <p className="text-xl sm:text-2xl text-white mb-9 max-w-lg animate-fadeIn delay-100">
                 {slide.description}
               </p>
               <button className="px-8 py-3 bg-green-900 hover:bg-green-800 rounded-md text-lg font-medium transition-colors animate-fadeIn delay-200">

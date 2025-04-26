@@ -33,7 +33,7 @@ export default function Home() {
                       </div>
                       <div className="p-4 h-96 md:h-[600px]">
                       <Image
-                      src="/images/kya2.jpg"
+                      src="/images/kya.jpg"
                       alt="Hero Image 1"
                       width={3000}
                       height={1000}
