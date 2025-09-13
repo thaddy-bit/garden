@@ -1,9 +1,7 @@
-// import pool from '../../../lib/db';
-// import pool from "../../../lib/db";
 import { pool } from '@/lib/db';
-import jwt from "jsonwebtoken"; // Import de JWT pour la gestion des tokens
-import bcrypt from "bcryptjs"; // Import de bcrypt pour comparer les mots de passe
-import cookie from "cookie";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { createAuthCookie } from '@/lib/cookie-utils';
 
 export default async function handler(req, res) {
   
@@ -41,17 +39,8 @@ export default async function handler(req, res) {
   const token = jwt.sign({ id: client.id, email: client.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
 
-  // Stocke le token dans un cookie HTTP-only
-  res.setHeader(
-    "Set-Cookie",
-    cookie.serialize("client_token", token, {
-      httpOnly: true, // Empêche l'accès en JS (protège contre XSS)
-      secure: process.env.NODE_ENV === "production", // Activer HTTPS en production
-      sameSite: "lax", // Changé de "Strict" à "lax" pour compatibilité
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60, // Expiration en 7 jours (comme Google auth)
-    })
-  );
+  // Stocke le token dans un cookie HTTP-only avec configuration uniforme
+  res.setHeader("Set-Cookie", createAuthCookie(token));
 
   // Définir le cookie
 /*

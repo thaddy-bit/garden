@@ -1,7 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
 import mysql from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import { createAuthCookie } from '@/lib/cookie-utils';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -130,16 +130,8 @@ export default async function handler(req, res) {
         { expiresIn: '7d' }
       );
 
-      // Définir le cookie
-      const tokenCookie = cookie.serialize('client_token', jwtToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60, // 7 jours
-        path: '/'
-      });
-
-      res.setHeader('Set-Cookie', tokenCookie);
+      // Définir le cookie avec configuration uniforme
+      res.setHeader('Set-Cookie', createAuthCookie(jwtToken));
 
       res.status(200).json({
         success: true,
