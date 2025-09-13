@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import "@/styles/globals.css";
 import { CartProvider } from "../context/CartContext";
+import { AuthProvider } from "../context/AuthContext";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -22,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
       setTimeout(() => {
         setLoading(false);
         setFade(true);
-      }, 300); // petit délai pour un meilleur effet
+      }, 100); // délai réduit pour un chargement plus rapide
     };
 
     router.events.on("routeChangeStart", handleStart);
@@ -37,11 +38,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
+    <AuthProvider>
       <CartProvider>
         <Toaster richColors position="top-right" />
         {loading && <PageLoader />}
         <Component {...pageProps} />
-        
       </CartProvider>
+    </AuthProvider>
   );
 }

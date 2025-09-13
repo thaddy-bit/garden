@@ -1,4 +1,4 @@
-import Layout from '../../../components/Layout';
+import LayoutAdmin from '../../../components/Admin/Layout_admin';
 import { useState } from "react";
 
 export default function AjouterSoin() {
@@ -38,7 +38,7 @@ export default function AjouterSoin() {
   };
 
   return (
-    <Layout>
+    <LayoutAdmin>
         <form onSubmit={handleSubmit} className="p-4 max-w-md mx-auto space-y-4">
         <input type="text" name="nom" placeholder="Nom" onChange={handleChange} required />
         <textarea name="description" placeholder="Description" onChange={handleChange} required />
@@ -46,7 +46,7 @@ export default function AjouterSoin() {
         <input type="file" onChange={handleImageChange} required />
         <button type="submit">Ajouter Produit</button>
         </form>
-    </Layout>
+    </LayoutAdmin>
     
   );
 }

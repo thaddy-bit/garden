@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration - Modes de paiement dynamiques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Démonstration - Modes de paiement dynamiques</h1>
+        
+        <!-- Section des modes de paiement -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="h-5 w-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                </svg>
+                Paiement
+            </h3>
+            
+            <div class="space-y-3">
+                <div class="grid grid-cols-1 gap-3">
+                    <!-- Carte bancaire -->
+                    <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="paymentMethod" value="CARTE_BANCAIRE" class="sr-only">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <span class="text-2xl">💳</span>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Carte bancaire</div>
+                                <div class="text-sm text-gray-500">Paiement par carte bancaire sécurisé</div>
+                            </div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                        </div>
+                    </label>
+                    
+                    <!-- Orange Money -->
+                    <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="paymentMethod" value="ORANGE_MONEY" class="sr-only">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <span class="text-2xl">🟠</span>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Orange Money</div>
+                                <div class="text-sm text-gray-500">Paiement mobile avec Orange Money</div>
+                            </div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                        </div>
+                    </label>
+                    
+                    <!-- Wave -->
+                    <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="paymentMethod" value="WAVE" class="sr-only">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <span class="text-2xl">🌊</span>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Wave</div>
+                                <div class="text-sm text-gray-500">Paiement mobile avec Wave</div>
+                            </div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                        </div>
+                    </label>
+                    
+                    <!-- Kpay -->
+                    <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all border-gray-200 hover:border-gray-300">
+                        <input type="radio" name="paymentMethod" value="KPAY" class="sr-only">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <span class="text-2xl">💙</span>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">Kpay</div>
+                                <div class="text-sm text-gray-500">Paiement mobile avec Kpay</div>
+                            </div>
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Informations techniques -->
+        <div class="mt-8 bg-blue-50 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-blue-900 mb-3">✅ Implémentation terminée</h4>
+            <ul class="text-sm text-blue-800 space-y-2">
+                <li>• <strong>API créée :</strong> <code>/api/modes-paiement</code> pour récupérer les modes depuis la base de données</li>
+                <li>• <strong>Page panier modifiée :</strong> Chargement dynamique des modes de paiement</li>
+                <li>• <strong>Interface améliorée :</strong> Sélection visuelle avec icônes et descriptions</li>
+                <li>• <strong>Fallback intégré :</strong> Données de test en cas d'erreur de base de données</li>
+                <li>• <strong>Responsive :</strong> Interface adaptée mobile et desktop</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Simulation de la sélection des modes de paiement
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Retirer la sélection précédente
+                document.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('border-gray-900', 'bg-gray-50', 'ring-2', 'ring-gray-900', 'ring-opacity-20');
+                    label.querySelector('.w-4.h-4').classList.remove('border-gray-900', 'bg-gray-900');
+                    label.querySelector('.w-4.h-4').innerHTML = '';
+                });
+                
+                // Appliquer la sélection actuelle
+                if (this.checked) {
+                    const label = this.closest('label');
+                    label.classList.add('border-gray-900', 'bg-gray-50', 'ring-2', 'ring-gray-900', 'ring-opacity-20');
+                    const radioCircle = label.querySelector('.w-4.h-4');
+                    radioCircle.classList.add('border-gray-900', 'bg-gray-900');
+                    radioCircle.innerHTML = '<div class="w-2 h-2 bg-white rounded-full mx-auto mt-0.5"></div>';
+                    
+                    console.log('Mode de paiement sélectionné:', this.value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

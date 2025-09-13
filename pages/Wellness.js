@@ -1,5 +1,5 @@
 import Layout from '../components/Layout';
-// import Link from 'next/link';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Image from 'next/image';
@@ -37,8 +37,10 @@ export default function Wellness() {
 
 
     const handleAddToCart = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+      // redirige vers la page de rendezvous avec l'ID du Service
+      router.push("/wellness/reserver/${product.id}");
+    // setSelectedProduct(product);
+    // setIsModalOpen(true);
     };
 
     const [formData, setFormData] = useState({
@@ -93,7 +95,7 @@ export default function Wellness() {
                         <Image
                         src={product.image_url}
                         alt={product.nom}
-                        width={3000} 
+                        width={3000}
                         height={1000}
                         className="w-full h-64 object-cover"
                         />
@@ -101,12 +103,12 @@ export default function Wellness() {
                     <div className="p-4">
                         <h3 className="font-semibold mb-2">{product.nom}</h3>
                         <p className="font-bold text-gray-900 mb-4">FCFA {product.prix}</p>
-                        <button
-                        onClick={() => handleAddToCart(product)}
-                        className="w-full px-4 py-2 bg-green-900 text-white rounded-lg hover:bg-green-800 transition-colors duration-300"
-                        >
-                        Prendre rendez-vous
-                        </button>
+                        <Link
+                          href={`/wellness/reserver/${product.id}`}
+                          className="w-full px-4 py-2 bg-green-900 text-white rounded-lg hover:bg-green-800 transition-colors duration-300"
+                          >
+                          Prendre rendez-vous
+                        </Link>
                     </div>
                     </div>
                      ))}
@@ -124,7 +126,7 @@ export default function Wellness() {
                   <Image
                   src={selectedProduct.image_url}
                   alt={selectedProduct.nom}
-                  width={3000} 
+                  width={3000}
                   height={1000}
                   className="w-500 lg:w-300 h-50 object-cover mb-4"
                   />

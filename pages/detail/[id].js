@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import Layout from "../../components/Layout";
+import ProductImageCarousel from "../../components/ProductImageCarousel";
 
 export default function ProduitDetail() {
   const router = useRouter();
@@ -79,15 +80,27 @@ export default function ProduitDetail() {
       {/* ====== Images ====== */}
       <div className="space-y-4">
         <div className="relative w-full h-[500px] rounded-xl overflow-hidden shadow-lg">
-          <Image src={product.image_url} alt={product.nom} fill className="object-cover" />
+          <ProductImageCarousel
+            images={product.images}
+            productName={product.nom}
+            className="w-full h-full"
+          />
         </div>
-        <div className="flex space-x-2">
-          {(product.gallery || [product.image_url]).map((img, i) => (
-            <div key={i} className="w-20 h-20 border rounded-lg overflow-hidden">
-              <Image src={img} alt={`miniature ${i}`} width={80} height={80} className="object-cover" />
-            </div>
-          ))}
-        </div>
+        {product.images && product.images.length > 1 && (
+          <div className="flex space-x-2">
+            {product.images.map((img, i) => (
+              <div key={i} className="w-20 h-20 border rounded-lg overflow-hidden">
+                <Image 
+                  src={img.image_url} 
+                  alt={img.image_alt || `miniature ${i}`} 
+                  width={80} 
+                  height={80} 
+                  className="object-cover" 
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ====== Infos produit ====== */}
@@ -96,13 +109,25 @@ export default function ProduitDetail() {
         <p className="text-gray-600 text-lg">{product.description}</p>
 
         <div className="flex items-center space-x-4">
-          <span className="text-2xl font-semibold text-amber-600">{product.prix.toLocaleString('fr-FR')} FCFA</span>
-          {product.isNew && (
+          <span className="text-2xl font-semibold text-amber-600">
+            {product.prix ? product.prix.toLocaleString('fr-FR') : '0'} FCFA
+          </span>
+          {product.prix_reduction && (
+            <span className="text-lg text-gray-500 line-through">
+              {product.prix_reduction.toLocaleString('fr-FR')} FCFA
+            </span>
+          )}
+          {product.nouveaute && (
             <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">Nouveau</span>
           )}
-          {product.quantite <= 5 && (
-            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm animate-pulse">
-              Plus que {product.quantite} !
+          {product.en_solde && (
+            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
+              -{product.pourcentage_reduction}%
+            </span>
+          )}
+          {product.stock <= 5 && (
+            <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm animate-pulse">
+              Plus que {product.stock} !
             </span>
           )}
         </div>
@@ -113,8 +138,9 @@ export default function ProduitDetail() {
           <div><span className="font-medium">Taille :</span> {product.taille || "N/A"}</div>
           <div><span className="font-medium">Couleur :</span> {product.couleur || "N/A"}</div>
           <div><span className="font-medium">Matière :</span> {product.materiau || "N/A"}</div>
-          <div><span className="font-medium">Marque :</span> {product.marque || "N/A"}</div>
+          <div><span className="font-medium">Marque :</span> {product.marque_nom || "N/A"}</div>
           <div><span className="font-medium">Poids :</span> {product.poids || "N/A"}</div>
+          <div><span className="font-medium">Catégorie :</span> {product.sous_categorie_nom || "N/A"}</div>
         </div>
 
         {/* ====== Quantité + Ajouter au panier ====== */}
@@ -124,7 +150,7 @@ export default function ProduitDetail() {
             type="number"
             id="quantite"
             min={1}
-            max={product.quantite}
+            max={product.stock || 1}
             value={quantite}
             onChange={(e) => setQuantite(Number(e.target.value))}
             className="w-24 border rounded px-3 py-2"

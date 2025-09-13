@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration - Combo box des modes de paiement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Démonstration - Combo box des modes de paiement</h1>
+        
+        <!-- Section des modes de paiement avec combo box -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="h-5 w-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                </svg>
+                Paiement
+            </h3>
+            
+            <div class="space-y-3">
+                <div class="relative">
+                    <select id="paymentSelect" class="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:ring-2 focus:ring-gray-900 focus:border-transparent cursor-pointer">
+                        <option value="">Choisissez un mode de paiement</option>
+                        <option value="ESPECES">💳 Espèces</option>
+                        <option value="ORANGE_MONEY">🟠 Orange Money</option>
+                        <option value="WAVE">🌊 Wave</option>
+                        <option value="FREE_MONEY">💙 Free Money</option>
+                        <option value="CARTE_BANCAIRE">💳 Carte Bancaire</option>
+                        <option value="VIREMENT_BANCAIRE">🏦 Virement Bancaire</option>
+                        <option value="CHEQUE">📝 Chèque</option>
+                        <option value="PAYPAL">🔵 PayPal</option>
+                        <option value="STRIPE">💜 Stripe</option>
+                    </select>
+                    
+                    <!-- Icône de la flèche -->
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Affichage du mode sélectionné avec détails -->
+                <div id="selectedMode" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <span id="selectedIcon" class="text-2xl">💳</span>
+                        </div>
+                        <div class="flex-1">
+                            <div id="selectedName" class="font-medium text-gray-900">Mode de paiement</div>
+                            <div id="selectedDescription" class="text-sm text-gray-500">Description du mode de paiement</div>
+                        </div>
+                        <div id="selectedCategory" class="text-sm text-gray-400 capitalize">catégorie</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Avantages de la combo box -->
+        <div class="mt-8 bg-green-50 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-green-900 mb-3">✅ Avantages de la combo box</h4>
+            <ul class="text-sm text-green-800 space-y-2">
+                <li>• <strong>Économie d'espace :</strong> Interface compacte, idéale pour mobile</li>
+                <li>• <strong>Navigation rapide :</strong> Recherche facile dans la liste déroulante</li>
+                <li>• <strong>Affichage détaillé :</strong> Détails du mode sélectionné en dessous</li>
+                <li>• <strong>Interface native :</strong> Utilise les contrôles natifs du navigateur</li>
+                <li>• <strong>Accessibilité :</strong> Compatible avec les lecteurs d'écran</li>
+                <li>• <strong>Performance :</strong> Moins d'éléments DOM à gérer</li>
+            </ul>
+        </div>
+        
+        <!-- Comparaison avant/après -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-red-50 rounded-lg p-4">
+                <h5 class="font-semibold text-red-900 mb-2">❌ Avant (Radio buttons)</h5>
+                <ul class="text-sm text-red-800 space-y-1">
+                    <li>• 9 éléments radio</li>
+                    <li>• Prend beaucoup d'espace vertical</li>
+                    <li>• Difficile sur mobile</li>
+                    <li>• Scroll nécessaire</li>
+                </ul>
+            </div>
+            
+            <div class="bg-green-50 rounded-lg p-4">
+                <h5 class="font-semibold text-green-900 mb-2">✅ Après (Combo box)</h5>
+                <ul class="text-sm text-green-800 space-y-1">
+                    <li>• 1 élément select</li>
+                    <li>• Interface compacte</li>
+                    <li>• Parfait sur mobile</li>
+                    <li>• Détails en dessous</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simulation de la sélection des modes de paiement
+        const paymentSelect = document.getElementById('paymentSelect');
+        const selectedMode = document.getElementById('selectedMode');
+        const selectedIcon = document.getElementById('selectedIcon');
+        const selectedName = document.getElementById('selectedName');
+        const selectedDescription = document.getElementById('selectedDescription');
+        const selectedCategory = document.getElementById('selectedCategory');
+        
+        // Données des modes de paiement
+        const paymentModes = {
+            'ESPECES': {
+                icon: '💳',
+                name: 'Espèces',
+                description: 'Paiement en espèces',
+                category: 'physique'
+            },
+            'ORANGE_MONEY': {
+                icon: '🟠',
+                name: 'Orange Money',
+                description: 'Paiement via Orange Money',
+                category: 'électronique'
+            },
+            'WAVE': {
+                icon: '🌊',
+                name: 'Wave',
+                description: 'Paiement via Wave',
+                category: 'électronique'
+            },
+            'FREE_MONEY': {
+                icon: '💙',
+                name: 'Free Money',
+                description: 'Paiement via Free Money',
+                category: 'électronique'
+            },
+            'CARTE_BANCAIRE': {
+                icon: '💳',
+                name: 'Carte Bancaire',
+                description: 'Paiement par carte bancaire',
+                category: 'électronique'
+            },
+            'VIREMENT_BANCAIRE': {
+                icon: '🏦',
+                name: 'Virement Bancaire',
+                description: 'Paiement par virement bancaire',
+                category: 'virement'
+            },
+            'CHEQUE': {
+                icon: '📝',
+                name: 'Chèque',
+                description: 'Paiement par chèque',
+                category: 'physique'
+            },
+            'PAYPAL': {
+                icon: '🔵',
+                name: 'PayPal',
+                description: 'Paiement via PayPal',
+                category: 'en ligne'
+            },
+            'STRIPE': {
+                icon: '💜',
+                name: 'Stripe',
+                description: 'Paiement via Stripe',
+                category: 'en ligne'
+            }
+        };
+        
+        paymentSelect.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            if (selectedValue && paymentModes[selectedValue]) {
+                const mode = paymentModes[selectedValue];
+                selectedIcon.textContent = mode.icon;
+                selectedName.textContent = mode.name;
+                selectedDescription.textContent = mode.description;
+                selectedCategory.textContent = mode.category;
+                selectedMode.classList.remove('hidden');
+            } else {
+                selectedMode.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

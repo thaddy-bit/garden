@@ -1,0 +1,42 @@
+# Variables d'environnement pour l'authentification sociale
+# Ajoutez ces variables à votre fichier .env.local
+
+# Google OAuth
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
+# Facebook OAuth
+NEXT_PUBLIC_FACEBOOK_APP_ID=your_facebook_app_id_here
+FACEBOOK_APP_ID=your_facebook_app_id_here
+FACEBOOK_APP_SECRET=your_facebook_app_secret_here
+
+# Apple Sign In
+NEXT_PUBLIC_APPLE_CLIENT_ID=your_apple_client_id_here
+APPLE_CLIENT_ID=your_apple_client_id_here
+APPLE_TEAM_ID=your_apple_team_id_here
+APPLE_KEY_ID=your_apple_key_id_here
+APPLE_PRIVATE_KEY=your_apple_private_key_here
+
+# Twitter OAuth (optionnel)
+TWITTER_CLIENT_ID=your_twitter_client_id_here
+TWITTER_CLIENT_SECRET=your_twitter_client_secret_here
+
+# LinkedIn OAuth (optionnel)
+LINKEDIN_CLIENT_ID=your_linkedin_client_id_here
+LINKEDIN_CLIENT_SECRET=your_linkedin_client_secret_here
+
+# Microsoft OAuth (optionnel)
+MICROSOFT_CLIENT_ID=your_microsoft_client_id_here
+MICROSOFT_CLIENT_SECRET=your_microsoft_client_secret_here
+
+# JWT Secret (déjà existant)
+JWT_SECRET=your_jwt_secret_here
+
+# Base de données (déjà existant)
+DB_HOST=your_db_host
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+
+

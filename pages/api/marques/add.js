@@ -39,9 +39,9 @@ export default function handler(req, res) {
         // Récupérer l'URL de l'image
         const image_url = `/uploads/marques/${req.file.filename}`;
 
-        // Requête SQL pour insérer le produit
+        // Requête SQL pour insérer la marque
         const query = `
-          INSERT INTO catégorie (nom, description, image_url, zone)
+          INSERT INTO marques (nom, description, image_url, zone)
           VALUES (?, ?, ?, ?)
         `;
 

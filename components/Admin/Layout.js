@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import {
-  Menu,
-  X,
-  Home,
-  User,
-  ChevronDown,
-  Settings,
-  LogOut,
-} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Toaster } from "sonner";
 import PageLoader from "../../components/PageLoader";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 export default function Layout({ children, loading = false }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [estOuvert, setEstOuvert] = useState(false);
 
   const [lowStockCount, setLowStockCount] = useState(0);
@@ -35,78 +28,22 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      {/* SIDEBAR */}
-      <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md p-5 z-40 transform transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-64"
-        } md:translate-x-0`}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <Image
-            src="/images/KYA-01.png"
-            alt="logo"
-            width={120}
-            height={80}
-            className="object-cover"
-            priority
-            unoptimized
-          />
-          <button
-            className="md:hidden text-black"
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <X size={24} />
-          </button>
-        </div>
-
-        <nav className="space-y-3 text-sm">
-          <SidebarLink href="/Admin/dashbord"  label="Dashboard" />
-          <SidebarLink href="/Admin/Marques/getAll"  label="Collections" />
-          <SidebarLink href="/Admin/Sous_collections/add"  label="Sous Collections" />
-          
-          <SidebarLink
-            href="/Admin/Produits/add-product"
-            label="Articles"
-            badge={lowStockCount > 0 ? lowStockCount : null}
-          />
-
-          <SidebarLink href="/Admin/Produits/stock-faible" label="Stock Faible 🔥" />
-        </nav>
-      </aside>
+    <div className="h-screen bg-gray-100 overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 min-h-screen md:pl-64 flex flex-col">
-        {/* HEADER */}
-        <header className="bg-amber-50 shadow-md p-4 flex justify-between items-center sticky top-0 z-30">
-          <button
-            className="md:hidden text-black"
-            onClick={() => setIsSidebarOpen(true)}
-          >
-            <Menu size={24} />
-          </button>
-          <h1 className="text-xl font-semibold text-black"></h1>
-          <div className="flex gap-4">
-            <Link
-              href="/settings"
-              className="p-2 hover:bg-amber-100 text-black rounded-lg"
-            >
-              <Settings size={20} />
-            </Link>
-            <Link
-              href="/logout"
-              className="p-2 hover:bg-amber-100 text-black rounded-lg"
-            >
-              <LogOut size={20} />
-            </Link>
-          </div>
-        </header>
+      <div className={`h-screen min-h-0 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'md:ml-20'}`}>
+        <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
         {/* PAGE CONTENT */}
-        <main className="flex-1 p-6 overflow-y-auto bg-white shadow-inner rounded-t-lg">
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          {/* Spacer for fixed navbar height */}
+          <div className="h-20" />
+          <main className="min-h-0 px-0 py-4 bg-white">
           {loading && <PageLoader />}
           {children}
-        </main>
+          </main>
+        </div>
       </div>
 
       {/* CLICK OUTSIDE DROPDOWN */}

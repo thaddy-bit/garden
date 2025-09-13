@@ -23,10 +23,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const decoded = jwt.verify(token, "secret_key");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // console.log("Token décodé:", decoded);
 
-    const [rows] = await pool.query("SELECT id, email FROM client WHERE id = ?", [decoded.id]);
+    const [rows] = await pool.query(
+      "SELECT id, nom, prenom, telephone, email FROM client WHERE id = ?",
+      [decoded.id]
+    );
     // console.log("Résultat de la requête:", rows);
 
     if (!rows || rows.length === 0) {

@@ -1,25 +1,20 @@
-// import pool from "../../../lib/db";
-import { pool } from '@/lib/db'; 
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]"; // Assurez-vous que le chemin est correct
+import { pool } from '@/lib/db';
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Méthode non autorisée" });
   }
 
+  const client_id = req.query.client_id;
+
+  if (!client_id) {
+    return res.status(400).json({ error: "Client requis" });
+  }
+
   try {
-    const session = await getServerSession(req, res, authOptions);
-
-    if (!session || !session.user) {
-      return res.status(401).json({ message: "Non autorisé" });
-    }
-
-    const userId = session.user.id;
-
     const [result] = await pool.query(
       "SELECT SUM(quantite) as total FROM panier WHERE client_id = ?",
-      [userId]
+      [client_id]
     );
 
     res.status(200).json({ total: result[0].total || 0 });

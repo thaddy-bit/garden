@@ -2,6 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import { pool } from "@/lib/db"; // Utilise ta propre configuration DB ici
 import { NextApiRequest, NextApiResponse } from "next";
+import { generateUniqueSlug } from "@/lib/slug";
 
 // Configuration de multer pour gérer l'upload
 const storage = multer.diskStorage({
@@ -79,14 +80,19 @@ export default async function handler(req, res) {
         const gallery = req.files.map((file) => `/uploads/${file.filename}`); // Construction du chemin d'accès aux images uploadées
 
         try {
+          // Générer un slug unique
+          const [existingSlugs] = await pool.query("SELECT slug FROM produits WHERE slug IS NOT NULL");
+          const slug = generateUniqueSlug(nom, existingSlugs.map(row => row.slug));
+
           const insertQuery = `
-            INSERT INTO produits (nom, description, prix, quantite, image_url, catégorie_id, sous_catégorie_id, 
+            INSERT INTO produits (nom, slug, description, prix, quantite, image_url, catégorie_id, sous_catégorie_id, 
                                   rating, reviews, isNew, taille, couleur, materiau, marque, poids, gallery)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `;
 
           const insertValues = [
             nom,
+            slug,
             description,
             prix,
             quantite,

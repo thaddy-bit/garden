@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     { expiresIn: "1d" } // Durée de validité du token (1 jour)
   );
   */
-  const token = jwt.sign({ id: client.id, email: client.email }, "secret_key", { expiresIn: "7d" });
+  const token = jwt.sign({ id: client.id, email: client.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
 
   // Stocke le token dans un cookie HTTP-only
@@ -106,7 +106,7 @@ export default async function handler(req, res) {
     }
 
     // Générer un token JWT
-    const token = jwt.sign({ id: user.id, email: user.email }, "secret_key", { expiresIn: "7d" });
+    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     // Définir le cookie
     res.setHeader("Set-Cookie", cookie.serialize("token", token, {
