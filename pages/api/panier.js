@@ -5,7 +5,7 @@ import cookie from 'cookie';
 // Fonction pour vérifier l'authentification
 const verifyAuth = (req) => {
   const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-  const token = cookies?.token || null;
+  const token = cookies?.client_token || null;
   
   if (!token) {
     return null;

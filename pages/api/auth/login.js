@@ -44,12 +44,12 @@ export default async function handler(req, res) {
   // Stocke le token dans un cookie HTTP-only
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("token", token, {
+    cookie.serialize("client_token", token, {
       httpOnly: true, // Empêche l'accès en JS (protège contre XSS)
       secure: process.env.NODE_ENV === "production", // Activer HTTPS en production
-      sameSite: "Strict",
+      sameSite: "lax", // Changé de "Strict" à "lax" pour compatibilité
       path: "/",
-      maxAge: 60 * 60 * 24, // Expiration en 24h
+      maxAge: 7 * 24 * 60 * 60, // Expiration en 7 jours (comme Google auth)
     })
   );
 

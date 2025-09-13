@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   // console.log("Cookies reçus en production:", req.headers.cookie);
 
 
-  const token = cookies?.token || null;
+  const token = cookies?.client_token || null;
   // console.log("Token récupéré:", token);
 
   if (!token) {

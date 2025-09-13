@@ -47,8 +47,13 @@ export const AuthProvider = ({ children }) => {
 
       if (res.ok) {
         const data = await res.json();
-        setUser(data.user);
-        Cookies.set("token", data.token, { expires: 7 }); // Session pendant 7 jours
+        // Le token est maintenant automatiquement défini dans le cookie par l'API
+        // On recharge l'utilisateur depuis l'API /me
+        const userRes = await fetch("/api/auth/me");
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          setUser(userData);
+        }
         router.push("/");
         return { success: true };
       } else {
