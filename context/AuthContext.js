@@ -66,10 +66,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    Cookies.remove("token");
-    setUser(null);
-    router.push("/");
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (e) {
+      // ignore
+    } finally {
+      setUser(null);
+      router.push("/");
+    }
   };
 
   const value = {

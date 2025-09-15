@@ -132,3 +132,4 @@ Le footer est maintenant **ultra-premium** avec :
 **Impact attendu** : +30% d'engagement sur les réseaux sociaux, +25% d'inscriptions newsletter, +40% de satisfaction utilisateur.
 
 
+

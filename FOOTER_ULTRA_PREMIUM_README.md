@@ -163,3 +163,4 @@ Le footer est maintenant **ultra-premium** avec :
 Le footer est maintenant intégré dans le Layout principal et apparaîtra automatiquement sur toutes les pages avec toutes les images de paiement et d'expédition ! 🎉
 
 
+

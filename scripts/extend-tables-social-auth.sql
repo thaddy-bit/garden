@@ -48,3 +48,4 @@ MODIFY COLUMN `social_data` JSON NULL COMMENT 'Données supplémentaires du prov
 MODIFY COLUMN `last_social_login` DATETIME NULL COMMENT 'Dernière connexion via provider social';
 
 
+

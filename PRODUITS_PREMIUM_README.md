@@ -95,3 +95,4 @@ La page produits est maintenant **ultra-premium** avec :
 **Impact attendu** : +40% de temps passé sur la page, +25% de taux de conversion, +60% de satisfaction utilisateur.
 
 
+

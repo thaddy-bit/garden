@@ -1,13 +1,6 @@
-import cookie from "cookie";
+import { clearAuthCookie } from "@/lib/cookie-utils";
 
 export default function handler(req, res) {
-  res.setHeader("Set-Cookie", cookie.serialize("token", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    expires: new Date(0),
-    path: "/",
-  }));
-
+  res.setHeader("Set-Cookie", clearAuthCookie());
   res.status(200).json({ message: "Déconnexion réussie" });
 }
