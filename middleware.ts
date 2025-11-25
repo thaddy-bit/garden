@@ -5,10 +5,36 @@ const ADMIN_COOKIE = 'admin_token';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect all /Admin routes except /Admin/login and public assets
+  // Vérifier le mode maintenance
+  const maintenanceMode = process.env.MAINTENANCE_MODE === 'true';
+  
+  // Routes exclues du mode maintenance
+  const isMaintenancePage = pathname === '/maintenance';
   const isAdminRoute = pathname.startsWith('/Admin');
+  const isApiRoute = pathname.startsWith('/api');
+  const isAsset = pathname.startsWith('/_next') || 
+                  pathname.startsWith('/public') || 
+                  pathname.startsWith('/images') ||
+                  pathname.startsWith('/uploads') ||
+                  pathname.startsWith('/videos') ||
+                  pathname.startsWith('/favicon.ico');
+
+  // Si le mode maintenance est activé et que ce n'est pas une route exclue
+  if (maintenanceMode && !isMaintenancePage && !isAdminRoute && !isApiRoute && !isAsset) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/maintenance';
+    return NextResponse.redirect(url);
+  }
+
+  // Si on est sur la page maintenance mais que le mode est désactivé, rediriger vers l'accueil
+  if (isMaintenancePage && !maintenanceMode) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/';
+    return NextResponse.redirect(url);
+  }
+
+  // Protect all /Admin routes except /Admin/login and public assets
   const isLoginPage = pathname === '/Admin/login';
-  const isAsset = pathname.startsWith('/_next') || pathname.startsWith('/public');
 
   if (!isAdminRoute || isLoginPage || isAsset) {
     return NextResponse.next();
@@ -43,7 +69,16 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/Admin/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 };
 
 

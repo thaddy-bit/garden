@@ -33,3 +33,7 @@ RESEND_API_KEY=your_resend_api_key_here
 
 # Environment
 NODE_ENV=production
+
+# Mode Maintenance - Activez cette option pour mettre le site en maintenance
+# Définissez à 'true' pour activer, 'false' ou laissez vide pour désactiver
+MAINTENANCE_MODE=false
